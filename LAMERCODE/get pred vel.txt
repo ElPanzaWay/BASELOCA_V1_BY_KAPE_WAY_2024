@@ -1,0 +1,41 @@
+void GetPredVelocity(int iIndex,float *flVecIn,float *flVelocityOut)
+{
+	vec3_t vVelocity;
+	g_Player[iIndex].flPredOldTime=g_Player[iIndex].flPredTime;
+	g_Player[iIndex].vPredOldVec=g_Player[iIndex].vPredVec;
+	g_Player[iIndex].flPredTime=g_Engine.GetClientTime();
+	VectorCopy(flVecIn,g_Player[iIndex].vPredVec);
+	float flDeltaTime=g_Player[iIndex].flPredTime-g_Player[iIndex].flPredOldTime;
+	vVelocity=(g_Player[iIndex].vPredVec-g_Player[iIndex].vPredOldVec)/flDeltaTime;
+	if(IS_NAN(vVelocity[0]) || IS_NAN(vVelocity[1]) || IS_NAN(vVelocity[2]))
+		vVelocity=Vector(0.0f,0.0f,0.0f);
+	for(int i=0;i<3;++i)
+		flVelocityOut[i]=vVelocity[i]*g_Local.flFrametime;
+}
+
+
+
+vec3_t vVelocity;
+
+		if ( cvar.aim_prediction->value )
+		{
+			GetPredVelocity(id,VictPos,vVelocity);
+		}
+		
+		VectorSubtract(VictPos, g_Local.vEye, aimAngles);
+		/*
+		if ( cvar.aim_prediction->value )
+		{
+			VictPos=VictPos + vVelocity;
+		}
+		*/
+
+
+
+
+101xD
+
+
+
+
+

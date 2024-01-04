@@ -1,0 +1,475 @@
+weapon_t *CNoSpread::GetWeaponByID(int iWeaponID)
+{
+	static DWORD dwFunction = 0;
+	if(!dwFunction)
+		dwFunction = g_Util.FindPattern("client.dll", (BYTE*)"\x8B\x44\x24\x04\x48\x83\xF8\x1D", "xxxxxxxx");
+	else
+		return ((weapon_t*(__cdecl*)(int))dwFunction)(iWeaponID);
+	return 0;
+}
+ 
+float CNoSpread::GetSpreadVariable(weapon_t *pWeapon)
+{
+	float flSpread = pWeapon->SpreadVar;
+	float flPlayerSpeed = g_Local.flPlayerSpeed;
+	int iPlayerFlags = g_Local.iFlags;
+	int iFOV = g_Local.iFOV;
+	int iWeaponBit = pWeapon->WeaponBit;
+ 
+	if(pWeapon->WeaponID == WEAPON_AK47)
+	{
+		if(iPlayerFlags &FL_ONGROUND)
+		{
+			if(flPlayerSpeed <= 140.0f)
+				flSpread = flSpread * 0.0275f;
+			else
+				flSpread = flSpread * 0.07f + 0.04f;
+		}
+		else
+			flSpread = flSpread * 0.4f + 0.04f;
+	}
+ 
+	if(pWeapon->WeaponID == WEAPON_AUG)
+	{
+		if(iPlayerFlags &FL_ONGROUND)
+		{
+			if(flPlayerSpeed > 140.0f)
+				flSpread = flSpread * 0.07f + 0.035f;
+			else if(iFOV != 90)
+				flSpread = flSpread * 0.02f;
+			else
+				flSpread = flSpread * 0.02f;
+		}
+		else
+			flSpread = flSpread * 0.4f + 0.035f;
+	}
+ 
+	if(pWeapon->WeaponID == WEAPON_AWP)
+	{
+		if(iPlayerFlags &FL_ONGROUND)
+		{
+			if(flPlayerSpeed <= 140.0f)
+			{
+				if(flPlayerSpeed <= 10.0f)
+				{
+					if(iPlayerFlags &FL_DUCKING)
+						flSpread = 0.0f;
+					else
+						flSpread = 0.001f;
+				}
+				else
+					flSpread = 0.1f;
+				
+			}
+			else
+				flSpread = 0.25f;
+		}
+		else
+			flSpread = 0.85f;
+ 
+		if(iFOV == 90)
+			flSpread += 0.08f;
+	}
+ 
+	if(pWeapon->WeaponID == WEAPON_DEAGLE)
+	{
+		if(iPlayerFlags &FL_ONGROUND)
+		{
+			if(flPlayerSpeed != 0)
+				flSpread = 0.25f;
+			else
+			{
+				if(iPlayerFlags &FL_DUCKING)
+					flSpread = 0.115f;
+				else
+					flSpread = 0.13f;
+			}
+		}
+		else
+			flSpread = 1.5f;
+ 
+		flSpread = flSpread * (1.0f - pWeapon->SpreadVar);
+	}
+ 
+	if(pWeapon->WeaponID == WEAPON_ELITE)
+	{
+		if(iPlayerFlags &FL_ONGROUND)
+		{
+			if(flPlayerSpeed == 0.0f)
+			{
+				if(iPlayerFlags &FL_DUCKING)
+					flSpread = 0.08f;
+				else
+					flSpread = 0.1f;
+			}
+			else
+				flSpread = 0.175f;
+		}
+		else
+			flSpread = 1.3f;
+ 
+		flSpread = flSpread * (1.0f - pWeapon->SpreadVar);
+	}
+ 
+	if(pWeapon->WeaponID == WEAPON_FAMAS)
+	{
+		if(iPlayerFlags &FL_ONGROUND)
+		{
+			if(flPlayerSpeed <= 140.0f)
+				flSpread = flSpread * 0.02f;
+			else
+				flSpread = flSpread * 0.07f + 0.03f;
+		}
+		else
+			flSpread = flSpread * 0.3f + 0.03f;
+ 
+		if(!(*(DWORD*)(pWeapon + 0x138) &0x10))
+			flSpread += 0.01f;
+	}
+ 
+	if(pWeapon->WeaponID == WEAPON_FIVESEVEN)
+	{
+		if(iPlayerFlags &FL_ONGROUND)
+		{
+			if(flPlayerSpeed == 0.0f)
+			{
+				if(iPlayerFlags &FL_DUCKING)
+					flSpread = 0.075f;
+				else
+					flSpread = 0.15f;
+			}
+			else
+				flSpread = 0.255f;
+		}
+		else
+			flSpread = 1.5f;
+ 
+		flSpread = flSpread * (1.0f - pWeapon->SpreadVar);
+	}
+ 
+	if(pWeapon->WeaponID == WEAPON_G3SG1)
+	{
+		if(iPlayerFlags &FL_ONGROUND)
+		{
+			if(flPlayerSpeed == 0.0f)
+			{
+				if(iPlayerFlags &FL_DUCKING)
+					flSpread = 0.035f;
+				else
+					flSpread = 0.055f;
+			}
+			else
+				flSpread = 0.15f;
+		}
+		else
+			flSpread = 0.45f;
+ 
+		if(iFOV == 90)
+			flSpread += 0.025f;
+ 
+		flSpread = flSpread * (1.0f - pWeapon->SpreadVar);
+	}
+ 
+	if(pWeapon->WeaponID == WEAPON_GALIL)
+	{
+		if(iPlayerFlags &FL_ONGROUND)
+		{
+			if(flPlayerSpeed <= 140.0f)
+				flSpread = flSpread * 0.0375f;
+			else
+				flSpread = flSpread * 0.07f + 0.04f;
+		}
+		else
+			flSpread = flSpread * 0.3f + 0.04f;
+	}
+ 
+	if(pWeapon->WeaponID == WEAPON_GLOCK18)
+	{
+		if(iWeaponBit)
+		{
+			if(iPlayerFlags &FL_ONGROUND)
+			{
+				if(flPlayerSpeed == 0.0f)
+				{
+					if(iPlayerFlags &FL_DUCKING)
+						flSpread = 0.095f;
+					else
+						flSpread = 0.3f;
+				}
+				else
+					flSpread = 0.185f;
+			}
+			else
+				flSpread = 1.2f;
+		}
+		else
+		{
+			if(iPlayerFlags &FL_ONGROUND)
+			{
+				if(flPlayerSpeed == 0.0f)
+				{
+					if(iPlayerFlags &FL_DUCKING)
+						flSpread = 0.075f;
+					else
+						flSpread = 0.1f;
+				}
+				else
+					flSpread = 0.165f;
+			}
+			else
+				flSpread = 1.0f;
+		}
+ 
+		flSpread = flSpread * (1.0f - pWeapon->SpreadVar);
+ 
+		if(iWeaponBit && *(DWORD*)(pWeapon + 0x40))
+			flSpread -= 0.05f;
+	}
+ 
+	if(pWeapon->WeaponID == WEAPON_PARA)
+	{
+		if(iPlayerFlags &FL_ONGROUND)
+		{
+			if(flPlayerSpeed <= 140.0f)
+				flSpread = flSpread * 0.03f;
+			else
+				flSpread = flSpread * 0.095f + 0.045f;
+		}
+		else
+			flSpread = flSpread * 0.5f + 0.045f;
+	}
+ 
+	if(pWeapon->WeaponID == WEAPON_M4A1)
+	{
+		if(iWeaponBit)
+		{
+			if(iPlayerFlags &FL_ONGROUND)
+			{
+				if(flPlayerSpeed <= 140.0f)
+					flSpread = flSpread * 0.025f;
+				else
+					flSpread = flSpread * 0.07f + 0.035f;
+			}
+			else
+				flSpread = flSpread * 0.4f + 0.035f;
+		}
+		else
+		{
+			if(iPlayerFlags &FL_ONGROUND)
+			{
+				if(flPlayerSpeed <= 140.0f)
+					flSpread = flSpread * 0.02f;
+				else
+					flSpread = flSpread * 0.07f + 0.035f;
+			}
+			else
+				flSpread = flSpread * 0.4f + 0.035f;
+		}
+	}
+ 
+	if(pWeapon->WeaponID == WEAPON_MAC10)
+	{
+		if(iPlayerFlags &FL_ONGROUND)
+			flSpread = flSpread * 0.03f;
+		else
+			flSpread = flSpread * 0.375f;
+	}
+ 
+	if(pWeapon->WeaponID == WEAPON_MP5)
+	{
+		if(iPlayerFlags &FL_ONGROUND)
+			flSpread = flSpread * 0.04f;
+		else
+			flSpread = flSpread * 0.2f;
+	}
+ 
+	if(pWeapon->WeaponID == WEAPON_P228)
+	{
+		if(iPlayerFlags &FL_ONGROUND)
+		{
+			if(flPlayerSpeed == 0.0f)
+			{
+				if(iPlayerFlags &FL_DUCKING)
+					flSpread = 0.075f;
+				else
+					flSpread = 0.15f;
+			}
+			else
+				flSpread = 0.255f;
+		}
+		else
+			flSpread = 1.5f;
+ 
+		flSpread = flSpread * (1.0f - pWeapon->SpreadVar);
+	}
+ 
+	if(pWeapon->WeaponID == WEAPON_P90)
+	{
+		if(iPlayerFlags &FL_ONGROUND)
+		{
+			if(flPlayerSpeed <= 170.0f)
+				flSpread = flSpread * 0.045f;
+			else
+				flSpread = flSpread * 0.115f;
+		}
+		else
+			flSpread = flSpread * 0.3f;
+	}
+ 
+	if(pWeapon->WeaponID == WEAPON_SCOUT)
+	{
+		if(iPlayerFlags &FL_ONGROUND)
+		{
+			if(flPlayerSpeed <= 170.0f)
+			{
+				if(iPlayerFlags &FL_DUCKING)
+					flSpread = 0.0f;
+				else
+					flSpread = 0.007f;
+			}
+			else
+				flSpread = 0.075f;
+		}
+		else
+			flSpread = 0.2f;
+ 
+		if(iFOV == 90)
+			flSpread += 0.025f;
+	}
+ 
+	if(pWeapon->WeaponID == WEAPON_SG550)
+	{
+		if(iPlayerFlags &FL_ONGROUND)
+		{
+			if(flPlayerSpeed == 0.0f)
+			{
+				if(iPlayerFlags &FL_DUCKING)
+					flSpread = 0.04f;
+				else
+					flSpread = 0.05f;
+			}
+			else
+				flSpread = 0.15f;
+		}
+		else
+			flSpread = 0.45f;
+		if(flPlayerSpeed == 0.0f)
+			flSpread = flSpread * (1.0f - pWeapon->SpreadVar);
+ 
+		if(iFOV == 90)
+			flSpread += 0.025f;
+	}
+ 
+	if(pWeapon->WeaponID == WEAPON_SG552)
+	{
+		if(iPlayerFlags &FL_ONGROUND)
+		{
+			if(flPlayerSpeed > 140.0f)
+				flSpread = flSpread * 0.075f + 0.035f;
+			else if(iFOV != 90)
+				flSpread = flSpread * 0.02f;
+			else
+				flSpread = flSpread * 0.02f;
+		}
+		else
+			flSpread = flSpread * 0.45f + 0.035f;
+	}
+ 
+	if(pWeapon->WeaponID == WEAPON_TMP)
+	{
+		if(iPlayerFlags &FL_ONGROUND)
+			flSpread = flSpread * 0.04f;
+		else
+			flSpread = flSpread * 0.25f;
+	}
+ 
+	if(pWeapon->WeaponID == WEAPON_UMP45)
+	{
+		if(iPlayerFlags &FL_ONGROUND)
+			flSpread = flSpread * 0.04f;
+		else
+			flSpread = flSpread * 0.24f;
+	}
+ 
+	if(pWeapon->WeaponID == WEAPON_USP)
+	{
+		if(iWeaponBit)
+		{
+			if(iPlayerFlags &FL_ONGROUND)
+			{
+				if(flPlayerSpeed == 0.0f)
+				{
+					if(iPlayerFlags &FL_DUCKING)
+						flSpread = 0.08f;
+					else
+						flSpread = 0.1f;
+				}
+				else
+					flSpread = 0.225f;
+			}
+			else
+				flSpread = 1.2f;
+		}
+		else
+		{
+			if(iPlayerFlags &FL_ONGROUND)
+			{
+				if(flPlayerSpeed == 0.0f)
+				{
+					if(iPlayerFlags &FL_DUCKING)
+						flSpread = 0.125f;
+					else
+						flSpread = 0.15f;
+				}
+				else
+					flSpread = 0.25f;
+			}
+			else
+				flSpread = 1.3f;
+		}
+ 
+		flSpread = flSpread * (1.0f - pWeapon->SpreadVar);
+	}
+ 
+	return flSpread;
+}
+ 
+typedef struct
+{
+	char _0x0000[172];
+	__int32 WeaponID; //0x00AC 
+	char _0x00B0[8];
+	float NextAttack; //0x00B8 
+	char _0x00BC[16];
+	__int32 Ammo; //0x00CC 
+	char _0x00D0[8];
+	__int32 Reloading; //0x00D8 
+	char _0x00DC[4];
+	__int32 ClipSize; //0x00E0 
+	char _0x00E4[20];
+	float SpreadVar; //0x00F8 
+	char _0x00FC[44];
+	__int32 WeaponBit; //0x0128
+}weapon_t; //0x12C
+
+
+
+
+
+
+For the elite to center you need to move your yaw viewangle based on which gun is firing.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

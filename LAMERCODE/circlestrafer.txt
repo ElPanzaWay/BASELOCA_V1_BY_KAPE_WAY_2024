@@ -1,0 +1,51 @@
+if(gCvar.circlestrafe && !(me.pmFlags&(FL_ONGROUND|FL_INWATER)) && me.pmGroundSpeed && me.alive)
+{
+    float variable = 0;
+ if (GetAsyncKeyState(0x56))
+ {
+  ucmd->forwardmove = 450.f;
+  ucmd->sidemove = 0.0f;
+  int random = rand() % 100;
+  int random2 = rand() % 1000;
+  static bool dir;
+  static float current_y = ucmd->viewangles.y;
+  if (me.pmGroundSpeed > 50.f)
+  {
+   variable += 0.00007;
+   current_y += 3 - variable;
+  }
+  else
+  {
+   variable = 0;
+  }
+  ucmd->viewangles.y = current_y;
+  if (random == random2)
+   ucmd->viewangles.y += random;
+  ucmd->viewangles[1] = current_y;
+  circlestrafeando=true;
+ }
+ else
+ {
+  float variable=0;
+  circlestrafeando=false;
+ }
+}
+
+
+
+
+https://www.unknowncheats.me/forum/counterstrike-1-5-1-6-and-mods/211264-circlestrafer.html
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,97 @@
+
+
+void armas(usercmd_s *ucmd)
+{
+    switch(GetCurWeaponId())
+    {
+    case WEAPONLIST_DEAGLE:
+        gCvar.recoil=2.0f;
+        break;
+    case WEAPONLIST_GLOCK18:
+        gCvar.recoil=0.05f;
+        break;
+    case WEAPONLIST_USP:
+        gCvar.recoil=1.5f;
+        break;
+    case WEAPONLIST_P228:
+        gCvar.recoil=0.5f;
+        break;
+    case WEAPONLIST_FIVESEVEN:
+        gCvar.recoil=0.5f;
+        break;
+    case WEAPONLIST_ELITE:
+        gCvar.recoil=1.8f;
+        break;
+    case WEAPONLIST_M3:
+        gCvar.recoil=1.5f;
+        break;
+    case WEAPONLIST_XM1014:
+        gCvar.recoil=1.5f;
+        break;
+    case WEAPONLIST_MP5:
+        gCvar.recoil=1.3f;
+        break;
+    case WEAPONLIST_TMP:
+        gCvar.recoil=1.6f;
+        break;
+    case WEAPONLIST_P90:
+        gCvar.recoil=1.6f;
+        break;
+    case WEAPONLIST_MAC10:
+        gCvar.recoil=1.6f;
+        break;
+    case WEAPONLIST_UMP45:
+        gCvar.recoil=1.3f;
+        break;
+    case WEAPONLIST_AK47:
+        gCvar.recoil=1.83f;
+        break;
+    case WEAPONLIST_M4A1:
+        gCvar.recoil=1.73f;
+        break;
+    case WEAPONLIST_AUG:
+        gCvar.recoil=1.8f;
+        break;
+    case WEAPONLIST_SG552:
+        gCvar.recoil=1.7f;
+        break;
+    case WEAPONLIST_GALIL:
+        gCvar.recoil=2.0f;
+        break;
+    case WEAPONLIST_FAMAS:
+        gCvar.recoil=2.3f;
+        break;
+    case WEAPONLIST_SCOUT:
+        gCvar.recoil=0.1f;
+        break;
+    case WEAPONLIST_AWP:
+        gCvar.recoil=1.0f;
+        break;
+    case WEAPONLIST_SG550:
+        gCvar.recoil=1.73f;
+        break;
+    case WEAPONLIST_G3SG1:
+        gCvar.recoil=1.73f;
+        break;
+    case WEAPONLIST_M249:
+        gCvar.recoil=1.85f;
+        break;
+    case WEAPONLIST_KNIFE:
+        gCvar.recoil=0.0f;
+        break;
+    case WEAPONLIST_SMOKEGRENADE:
+        gCvar.recoil=0.0f;
+        break;
+    case WEAPONLIST_HEGRENADE:
+        gCvar.recoil=0.0f;
+        break;
+    case WEAPONLIST_FLASHBANG:
+        gCvar.recoil=0.0f;
+        break;
+    case WEAPONLIST_C4:
+        gCvar.recoil=0.0f;
+        break;
+    default: gCvar.recoil=0.0f;
+    }
+}
+

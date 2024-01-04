@@ -1,0 +1,43 @@
+https://www.unknowncheats.me/forum/counterstrike-1-5-1-6-and-mods/278445-russian-walk-ddrun.html
+
+Ground Strafe:
+Code:
+if ( g_Local.iFlags & FL_ONGROUND )
+          cmd->buttons |= IN_DUCK;
+      if ( ( ( g_Local.iFlags & FL_ONGROUND ) && ( g_Local.bInDuck ) ) || !( g_Local.iFlags & FL_ONGROUND ) )
+          cmd->buttons &= ~IN_DUCK;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

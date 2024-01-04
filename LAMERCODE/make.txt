@@ -1,0 +1,47 @@
+void MakeAngle ( const Vector &Angles, usercmd_s *cmd )
+	{
+		Vector ViewForward, ViewRight, ViewUp, AimForward, AimRight, AimUp, vTemp;
+
+		float NewForward = 0.0f;
+		float NewRight = 0.0f;
+		float NewUp = 0.0f;
+
+		float Forward = cmd->forwardmove;
+		float Right = cmd->sidemove;
+		float Up = cmd->upmove;
+
+		cl_entity_s *Local = SDK::Interfaces::g_pEngine->GetLocalPlayer ( );
+
+		SDK::Interfaces::g_pEngine->pfnAngleVectors ( Local->curstate.movetype == MOVETYPE_WALK ?
+			Vector ( 0.0f, cmd->viewangles.y, 0.0f ) : cmd->viewangles, ViewForward, ViewRight, ViewUp );
+
+		if ( Local->curstate.movetype == MOVETYPE_WALK && !( SDK::Interfaces::g_pPlayerMove->movetype == 5 ) )
+		{
+			cmd->viewangles.x = Angles[0];
+			cmd->viewangles.y = Angles[1];
+		}
+
+		SDK::Interfaces::g_pEngine->pfnAngleVectors ( Local->curstate.movetype == MOVETYPE_WALK ?
+			Vector ( 0.0f, cmd->viewangles.y, 0.0f ) : cmd->viewangles, AimForward, AimRight, AimUp );
+
+		NewForward =
+			DotProduct ( Forward * ViewForward.Normalize ( ), AimForward ) +
+			DotProduct ( Right * ViewRight.Normalize ( ), AimForward ) +
+			DotProduct ( Up * ViewUp.Normalize ( ), AimForward );
+
+		NewRight =
+			DotProduct ( Forward * ViewForward.Normalize ( ), AimRight ) +
+			DotProduct ( Right * ViewRight.Normalize ( ), AimRight ) +
+			DotProduct ( Up * ViewUp.Normalize ( ), AimRight );
+
+		NewUp =
+			DotProduct ( Forward * ViewForward.Normalize ( ), AimUp ) +
+			DotProduct ( Right * ViewRight.Normalize ( ), AimUp ) +
+			DotProduct ( Up * ViewUp.Normalize ( ), AimUp );
+
+		cmd->forwardmove = ( Angles[0] > 81.0f ) ? -NewForward : NewForward;
+		cmd->sidemove = NewRight;
+		cmd->upmove = NewUp;
+	}
+}
+

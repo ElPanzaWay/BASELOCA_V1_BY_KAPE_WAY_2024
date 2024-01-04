@@ -1,0 +1,51 @@
+Credits: me
+
+Globals:
+
+PHP Code:
+bool bShoot = true; 
+float flShot;  
+CL_Createmove:
+
+PHP Code:
+// No-Recoil 
+if ( usercmd->buttons&IN_ATTACK ) 
+{ 
+    float flWait = *(float*)( dwBaseGun + 0xc0 ); 
+         
+    if( bShoot && ( flWait <= 0.0f || flWait >= flShot ) ) 
+        usercmd->buttons |= IN_ATTACK;     
+    else         
+        usercmd->buttons &= (~IN_ATTACK);  
+
+    bShoot = !bShoot; 
+}  
+In your events:
+
+PHP Code:
+if (args->entindex == Client.ent->index) 
+{ 
+    flShot =  *(float*)( dwBaseGun + 0xc0 ); 
+
+    //Rest of your nonsense 
+}  
+
+void ContinueFire(struct usercmd_s* cmd)
+{
+	if (cvar.rage_active && cmd->buttons & IN_ATTACK && IsCurWeaponPistol() && !g_Local.weapon.m_iInReload && g_Local.bAlive)
+	{
+		static bool bFire = false;
+
+		if (CanAttack() && bFire)
+		{
+			cmd->buttons |= IN_ATTACK;
+			bFire = false;
+		}
+		else if (!bFire)
+		{
+			cmd->buttons &= ~IN_ATTACK;
+			bFire = true;
+		}
+	}
+}
+

@@ -1,0 +1,135 @@
+	if((cvar.activate && cvar.aim==1 && cvar.nospread && !HasKnife() && !HasBadWeapon()))
+	{
+		float offset[3]={0,0,0};
+		bool bNS = false;
+
+		if(cvar.nospread==1)
+		{
+			bNS = true;
+			gNoSpread0.GetRecoilOffset(me.weaponid, me.spread.spreadvar, me.spread.random_seed, 1, usercmd->viewangles, g_ppmove->velocity, offset);
+		}
+
+		if(cvar.nospread==2)
+		{
+			bNS = true;
+			gNoSpread1.GetSpreadOffset(me.spread.random_seed, 1, usercmd->viewangles, g_ppmove->velocity, offset);
+		}
+
+		if(cvar.nospread==3)
+		{
+			bNS = true;
+		//	gNoSpread2.GetSpreadOffset(me.spread.random_seed, 1, usercmd->viewangles, g_ppmove->velocity, offset);
+			gNoSpread2.GetSpreadOffset(me.spread.random_seed, 2, usercmd->viewangles, g_ppmove->velocity, offset);
+		}
+
+		if(cvar.nospread==4)
+		{
+			bNS = true;
+			gNoSpread3.GetRecoilOffset(me.weaponid, me.spread.spreadvar, me.spread.random_seed, 1, usercmd->viewangles, g_ppmove->velocity, offset);
+		}
+
+		if(cvar.nospread==5)
+		{
+			bNS = true;
+			gNoSpread4.GetRecoilOffset(me.weaponid, me.spread.spreadvar, me.spread.random_seed, 1, usercmd->viewangles, g_ppmove->velocity, offset);
+		}
+
+		if(cvar.nospreadmode == 1)
+		{
+			
+			if(bNS)
+			{
+				if(usercmd->buttons & IN_ATTACK)
+			//	if(bRCS_CreateMove)
+				{
+					usercmd->viewangles[0] += offset[0];
+					usercmd->viewangles[1] += offset[1];
+					usercmd->viewangles[2] += offset[2];
+				}
+			}
+			else
+			{
+				if(cvar.nospread == 6)
+				{
+					NA_UpdateWeaponData();
+					NA_ItemPostFrame(usercmd);
+				//	NA_NoRecoil(usercmd);
+					
+				/*	if (usercmd->buttons & IN_ATTACK &&  
+		
+					//	IsCurWeaponGun()
+						!HasBadWeapon() && !HasKnife() &&
+
+					//	NA_CanAttack()
+						(me.spread.flNextPrimaryAttack <= 0.0f && !me.spread.iInReload && me.spread.flNextAttack <= 0.0f) )*/
+					if(usercmd->buttons & IN_ATTACK)
+				//	if(bRCS_CreateMove)
+					{
+						NA_NoSpread(usercmd);
+					}
+				}
+			}
+		}
+		else if(cvar.nospreadmode == 2)
+		{
+			
+			if(bNS)
+			{
+				if(usercmd->buttons & IN_ATTACK)
+			//	if(bRCS_CreateMove)
+				{
+					invisible_antispread(usercmd, offset);
+				}
+			}
+			else
+			{
+				if(cvar.nospread == 6)
+				{
+					NA_UpdateWeaponData();
+					NA_ItemPostFrame(usercmd);
+				//	NA_NoRecoil(usercmd);
+
+					if(usercmd->buttons & IN_ATTACK)
+				//	if(bRCS_CreateMove)
+					{
+						NA_NoSpread(usercmd);
+					}
+				}
+			}
+		}
+	/*	else if(cvar.nospreadmode == 3)
+		{
+			if(bNS)
+			{
+				if(usercmd->buttons & IN_ATTACK)
+			//	if(bRCS_CreateMove)
+				{
+					float Angles[3]={0,0,0};
+					float VAngles[3]={0,0,0};
+					VectorCopy(usercmd->viewangles, VAngles);
+					VAngles[0] += offset[0];
+					VAngles[1] += offset[1];
+					VAngles[2] += offset[2];
+					SmootherMe(me.cmdViewAngles, VAngles, Angles, 10);//cvar.recoilsmoothvalue
+					gEngfuncs.SetViewAngles(Angles);
+				//	VectorCopy(Angles, usercmd->viewangles);
+				}
+			}
+			else
+			{
+				if(cvar.nospread == 6)
+				{
+					NA_UpdateWeaponData();
+					NA_ItemPostFrame(usercmd);
+				//	NA_NoRecoil(usercmd);
+
+					if(usercmd->buttons & IN_ATTACK)
+				//	if(bRCS_CreateMove)
+					{
+						NA_NoSpread(usercmd);
+					}
+				}
+			}
+		}*/
+	}
+

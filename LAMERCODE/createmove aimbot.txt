@@ -1,0 +1,21 @@
+	
+
+
+
+static int counter = 0;
+if ( cvar.aimbot_aim )
+if ( Local.Alive && Target != -1 && Weapon.m_iClip && !Weapon.m_fInReload1 && !Weapon.m_fInReload1 )
+if ( cvar.aimbot_shoot && ( CanShoot >= 2 ) && ( Weapon.m_flNextPrimaryAttack - ( cmd->msec / 1000 ) < 0 ) )
+{
+	counter++;
+
+	if(counter==1)
+		VectorCopy ( vAimAngles, cmd->viewangles );
+
+	if(counter==2)
+	{
+		cmd->buttons |= IN_ATTACK;
+		counter=0;
+	}
+
+}

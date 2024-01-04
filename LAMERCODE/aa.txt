@@ -1,0 +1,61 @@
+
+Find head hitbox
+In some model the head hitbox is not 11, any idea how to find head without presetting number?
+
+something better than this:
+Code:
+					int foundhitbox = 0;
+					float height = -8192;
+					for (unsigned int hitbox = 0; hitbox < g_Player[id].iMaxHitboxes; hitbox++)
+					{
+						if (g_PlayerExtraInfoList[id].vHitbox[hitbox].z > height)
+						{
+							height = g_PlayerExtraInfoList[id].vHitbox[hitbox].z;
+							foundhitbox = hitbox;
+						}
+					}
+ 
+					Hitboxes.push_back(foundhitbox);
+
+//
+
+v28_LA_HITBOX = 11;
+    v8_APLICAR_RESOLVER = 0;
+    if ( 0.0 != RESOLVER_6F4A2A80 && 0.0 != AAENABLE_6F4A2A08 && 0.0 != gCvar )
+    {
+      v4 = ZN10VecPlayersixEj(*v16);
+      v5 = ZN10PlayerInfo6getEntEv(v4);
+      if ( *(float *)ZN6VectorcvPfEv(v5 + 2900) <= -55.0 )
+      {
+        v6 = ZN10VecPlayersixEj(*v16);
+        v7 = ZN10PlayerInfo6getEntEv(v6);
+        if ( *(float *)ZN6VectorcvPfEv(v7 + 2900) >= -65.0 )
+          v8_APLICAR_RESOLVER = 1;
+      }
+    }
+    if ( v8_APLICAR_RESOLVER )
+    {
+      v28_LA_HITBOX = 9;
+    }
+    else if ( 1.0 == HITBOX_6F4A2A44 )
+    {
+      v28_LA_HITBOX = 11;
+    }
+    else if ( 2.0 == HITBOX_6F4A2A44 )
+    {
+      v28_LA_HITBOX = 9;
+    }
+    else if ( 3.0 == HITBOX_6F4A2A44 )
+    {
+      v28_LA_HITBOX = 8;
+    }
+    else if ( 4.0 == HITBOX_6F4A2A44 )
+    {
+      v28_LA_HITBOX = 7;
+    }
+
+
+//
+
+
+

@@ -1,0 +1,226 @@
+
+int FireBullets(Vector start, Vector end, float flDistance, int iOriginalPenetration, int iBulletType, int iDamage, float flRangeModifier)
+{
+	Vector vecSrc, vecEnd, vecDir, vecTmp;
+	int iPenetration = iOriginalPenetration + 1;
+	int iPenetrationPower;
+	int iCurrentDamage = iDamage;
+	float flPenetrationDistance;
+	float flCurrentDistance;
+
+	pmtrace_t tr;
+	vecSrc = start;
+	vecEnd = end;
+
+	switch (iBulletType)
+	{
+	case BULLET_PLAYER_9MM:
+		iPenetrationPower = 21;
+		flPenetrationDistance = 800;
+		break;
+	case BULLET_PLAYER_45ACP:
+		iPenetrationPower = 15;
+		flPenetrationDistance = 500;
+		break;
+	case BULLET_PLAYER_50AE:
+		iPenetrationPower = 30;
+		flPenetrationDistance = 1000;
+		break;
+	case BULLET_PLAYER_762MM:
+		iPenetrationPower = 39;
+		flPenetrationDistance = 5000;
+		break;
+	case BULLET_PLAYER_556MM:
+		iPenetrationPower = 35;
+		flPenetrationDistance = 4000;
+		break;
+	case BULLET_PLAYER_338MAG:
+		iPenetrationPower = 45;
+		flPenetrationDistance = 8000;
+		break;
+	case BULLET_PLAYER_57MM:
+		iPenetrationPower = 30;
+		flPenetrationDistance = 2000;
+		break;
+	case BULLET_PLAYER_357SIG:
+		iPenetrationPower = 25;
+		flPenetrationDistance = 800;
+		break;
+	default:
+		iPenetrationPower = 0;
+		flPenetrationDistance = 0;
+		break;
+	}
+
+	vecDir = vecEnd - vecSrc;
+
+	float Length = vecDir.Length();
+
+	vecDir /= Length;
+
+	vecEnd = vecDir * flDistance + vecSrc;
+
+	float flDamageModifier = 0.5;
+
+	while (iPenetration)
+	{
+		UTIL_TextureHit(vecSrc, vecEnd, vecDir, -1, tr);
+
+		char cTextureType = GetTextureType(&tr, vecSrc, vecEnd);
+
+		switch (cTextureType)
+		{
+		case CHAR_TEX_CONCRETE:
+			iPenetrationPower *= 0.25;
+			break;
+		case CHAR_TEX_GRATE:
+			iPenetrationPower *= 0.5;
+			flDamageModifier = 0.4;
+			break;
+		case CHAR_TEX_METAL:
+			iPenetrationPower *= 0.15;
+			flDamageModifier = 0.2;
+			break;
+		case CHAR_TEX_COMPUTER:
+			iPenetrationPower *= 0.4;
+			flDamageModifier = 0.45;
+			break;
+		case CHAR_TEX_TILE:
+			iPenetrationPower *= 0.65;
+			flDamageModifier = 0.3;
+			break;
+		case CHAR_TEX_VENT:
+			iPenetrationPower *= 0.5;
+			flDamageModifier = 0.45;
+			break;
+		case CHAR_TEX_WOOD:
+			flDamageModifier = 0.6;
+			break;
+		default:
+			break;
+		}
+
+		if (tr.fraction != 1.0)
+		{
+			iPenetration--;
+
+			vecTmp = tr.endpos - start;
+
+			float tmplen = vecTmp.Length();
+
+			if (tmplen >= Length)
+			{
+				vecTmp = end - vecSrc;
+
+				float Length1 = vecTmp.Length();
+
+				vecTmp = vecEnd - vecSrc;
+
+				float Length2 = vecTmp.Length();
+
+				tr.fraction = Length1 / Length2;
+
+				flCurrentDistance = flDistance * tr.fraction;
+
+				iCurrentDamage *= pow(flRangeModifier, flCurrentDistance / 500);
+
+				return iCurrentDamage;
+			}
+
+			flCurrentDistance = flDistance * tr.fraction;
+
+			iCurrentDamage *= pow(flRangeModifier, flCurrentDistance / 500);
+
+			if (flCurrentDistance > flPenetrationDistance)
+				iPenetration = 0;
+
+			if (iPenetration)
+			{
+				vecSrc = iPenetrationPower * vecDir + tr.endpos;
+
+				flDistance = (flDistance - flCurrentDistance) * 0.5;
+
+				vecEnd = vecDir * flDistance + vecSrc;
+
+				flCurrentDistance = iCurrentDamage;
+
+				iCurrentDamage = flCurrentDistance * flDamageModifier;
+			}
+			else
+			{
+				vecSrc = 42 * vecDir + tr.endpos;
+
+				flDistance = (flDistance - flCurrentDistance) * 0.75;
+
+				vecEnd = vecDir * flDistance + vecSrc;
+
+				iCurrentDamage *= 0.75;
+			}
+		}
+		else iPenetration = 0;
+	}
+	return 0;
+}
+
+
+Perfect Wall FIX
+In most of "Perfect Wall" codes, they aren't complete because lacks of BulletType & TextureType data, so, here you go:
+
+BulletType:
+Code:
+	switch ( bullettype )
+	{
+		case 1:  damage -= 4; bulletvelocity = 21; distancemax = 800; break;
+		case 9:  damage -= 2; bulletvelocity = 15; distancemax = 500; break;
+		case 10: damage -= 4; bulletvelocity = 45; distancemax = 8000; break;
+		case 11: damage -= 2; bulletvelocity = 39; distancemax = 5000; break;
+		case 12: damage -= 3; bulletvelocity = 35; distancemax = 4000; break;
+		case 13: damage -= 4; bulletvelocity = 30; distancemax = 1000; break;
+		case 14: damage -= 4; bulletvelocity = 30; distancemax = 2000; break;
+		case 15: damage -= 4; bulletvelocity = 25; distancemax = 800; break;
+		default: bulletvelocity = 0; distancemax = 0; break;
+	}
+TextureType:
+Code:
+		switch ( GetTextureType ( &tr, vecSrc, vecEnd ) )
+		{
+			case 'C'/*CHAR_TEX_CONCRETE*/:	bulletvelocity *= 0.25; damagemult = 0.25; break;
+			case 'G'/*CHAR_TEX_GRATE*/: 	bulletvelocity *= 0.50; damagemult = 0.40; break;
+			case 'M'/*CHAR_TEX_METAL*/: 	bulletvelocity *= 0.15; damagemult = 0.20; break;
+			case 'P'/*CHAR_TEX_COMPUTER*/: 	bulletvelocity *= 0.40; damagemult = 0.45; break;
+			case 'T'/*CHAR_TEX_TILE*/: 		bulletvelocity *= 0.65; damagemult = 0.30; break;
+			case 'V'/*CHAR_TEX_VENT*/: 		bulletvelocity *= 0.50; damagemult = 0.45; break;
+			case 'W'/*CHAR_TEX_WOOD*/: 		bulletvelocity *= 1.00; damagemult = 0.60; break;
+			default: break;
+		}
+
+Have fun with your Perfect Wall... :P
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,412 @@
+
+Counter-Strike 1.6 Spread related code
+ebx + 128 = weapon bit
+esi + 0xf8 = spreadvar
+esi + 0xcc = number of bullets left
+
+
+Code:void cNoSpread::GetWeaponSpreadVarandBit()
+{
+DWORD dwBaseGun;
+  
+int id;
+id = playerItems.CurrentID();
+
+switch(id)
+{
+  case WEAPONLIST_GLOCK18:
+  {
+   dwBaseGun = 0x19EF0F8;
+   iClipCapacity = 20;
+
+   iCurrentShot = iClipCapacity - *(int*) (dwBaseGun + 0xCC);
+   iWeaponBit = *(int*) (dwBaseGun + 0x128);
+   flSpreadVar = *(float*) (dwBaseGun + 0xF8);
+  }
+
+  break;
+
+  case WEAPONLIST_USP:
+  {
+   dwBaseGun = 0x19EEE68;
+   iClipCapacity = 12;
+
+   iCurrentShot = iClipCapacity - *(int*) (dwBaseGun + 0xCC);
+   iWeaponBit = *(int*) (dwBaseGun + 0x128);
+   flSpreadVar = *(float*) (dwBaseGun + 0xF8);
+  }
+  
+  break;
+
+  case WEAPONLIST_P228:
+  {
+   dwBaseGun = 0x19F5F28;
+   iClipCapacity = 13;
+
+   iCurrentShot = iClipCapacity - *(int*) (dwBaseGun + 0xCC);
+   flSpreadVar = *(float*) (dwBaseGun + 0xF8);
+  }
+
+  break;
+
+  case WEAPONLIST_DEAGLE:
+  {   
+   dwBaseGun = 0x19EF238;
+   iClipCapacity = 7;
+   
+   iCurrentShot = iClipCapacity - *(int*) (dwBaseGun + 0xCC);
+   flSpreadVar = *(float*) (dwBaseGun + 0xF8);
+  }
+
+  break;
+
+  case WEAPONLIST_FIVESEVEN:
+  {
+   dwBaseGun = 0x19F5D38;
+   iClipCapacity = 20;
+
+   iCurrentShot = iClipCapacity - *(int*) (dwBaseGun + 0xCC);
+   flSpreadVar = *(float*) (dwBaseGun + 0xF8);
+  }
+
+  break;
+
+  case WEAPONLIST_ELITE:
+  {
+   dwBaseGun = 0x19EEBE0;
+   iClipCapacity = 30;
+
+   iCurrentShot = iClipCapacity - *(int*) (dwBaseGun + 0xCC);
+   iWeaponBit = *(int*) (dwBaseGun + 0x128);
+   flSpreadVar = *(float*) (dwBaseGun + 0xF8);
+  }
+
+  break;
+
+  case WEAPONLIST_M3:
+  {
+   dwBaseGun = 0x19F5AA8;
+   iClipCapacity = 8;
+
+   iCurrentShot = iClipCapacity - *(int*) (dwBaseGun + 0xCC);
+  // flSpreadVar = *(float*) (dwBaseGun + 0xF8);
+  }
+
+  break;
+
+  case WEAPONLIST_XM1014:
+  {
+   dwBaseGun = 0x19F4BC0;
+   iClipCapacity = 7;
+
+   iCurrentShot = iClipCapacity - *(int*) (dwBaseGun + 0xCC);
+  // flSpreadVar = *(float*) (dwBaseGun + 0xF8);
+  }
+  
+  case WEAPONLIST_TMP:
+  {
+   dwBaseGun = 0x19EED20;
+   iClipCapacity = 30;
+
+   iCurrentShot = iClipCapacity - *(int*) (dwBaseGun + 0xCC);
+   flSpreadVar = *(float*) (dwBaseGun + 0xF8);
+  }
+
+  break;
+
+  case WEAPONLIST_MAC10:
+  {
+   dwBaseGun = 0x19EEFA8;
+   iClipCapacity = 30;
+
+   iCurrentShot = iClipCapacity - *(int*) (dwBaseGun + 0xCC);
+   flSpreadVar = *(float*) (dwBaseGun + 0xF8);
+  }
+
+  break;
+
+  case WEAPONLIST_UMP45:
+  {
+   dwBaseGun = 0x19EF4B8;
+   iClipCapacity = 25;
+
+   iCurrentShot = iClipCapacity - *(int*) (dwBaseGun + 0xCC);
+   flSpreadVar = *(float*) (dwBaseGun + 0xF8);
+  }
+
+  break;
+
+  case WEAPONLIST_MP5:
+  {
+   dwBaseGun = 0x19EE140;
+   iClipCapacity = 30;
+
+   iCurrentShot = iClipCapacity - *(int*) (dwBaseGun + 0xCC);
+   flSpreadVar = *(float*) (dwBaseGun + 0xF8);
+  }
+
+  break;
+
+  case WEAPONLIST_P90:
+  {
+   dwBaseGun = 0x19EE790;
+   iClipCapacity = 50;
+
+   iCurrentShot = iClipCapacity - *(int*) (dwBaseGun + 0xCC);
+   flSpreadVar = *(float*) (dwBaseGun + 0xF8);
+  }
+
+  break;
+
+  case WEAPONLIST_FAMAS:
+  {
+   dwBaseGun = 0x19EF600;
+   iClipCapacity = 25;
+
+   iCurrentShot = iClipCapacity - *(int*) (dwBaseGun + 0xCC);
+   iWeaponBit = *(int*) (dwBaseGun + 0x128);
+   flSpreadVar = *(float*) (dwBaseGun + 0xF8);
+  }
+
+  break;
+
+  case WEAPONLIST_GALIL:
+  {
+   dwBaseGun = 0x19F6068;
+   iClipCapacity = 35;
+
+   iCurrentShot = iClipCapacity - *(int*) (dwBaseGun + 0xCC);
+   flSpreadVar = *(float*) (dwBaseGun + 0xF8);
+  }
+
+  break;
+
+  case WEAPONLIST_M4A1:
+  {
+   dwBaseGun = 0x19F5BF0;
+   iClipCapacity = 30;
+
+   iCurrentShot = iClipCapacity - *(int*) (dwBaseGun + 0xCC);
+   iWeaponBit = *(int*) (dwBaseGun + 0x128);
+   flSpreadVar = *(float*) (dwBaseGun + 0xF8);
+  }
+
+  break;
+
+  case WEAPONLIST_AK47:
+  {
+   dwBaseGun = 0x19EE958;
+   iClipCapacity = 30;
+
+   iCurrentShot = iClipCapacity - *(int*) (dwBaseGun + 0xCC);
+   flSpreadVar = *(float*) (dwBaseGun + 0xF8);
+  }
+
+  break;
+
+  case WEAPONLIST_AUG:
+  {
+   dwBaseGun = 0x19EDEA8;
+   iClipCapacity = 30;
+
+   iCurrentShot = iClipCapacity - *(int*) (dwBaseGun + 0xCC);
+   flSpreadVar = *(float*) (dwBaseGun + 0xF8);
+  }
+
+  break;
+
+  case WEAPONLIST_SG552:
+  {
+   dwBaseGun = 0x19EE508;
+   iClipCapacity = 30;
+
+   iCurrentShot = iClipCapacity - *(int*) (dwBaseGun + 0xCC);
+   flSpreadVar = *(float*) (dwBaseGun + 0xF8);
+  }
+
+  break;
+
+  case WEAPONLIST_SCOUT:
+  {
+   dwBaseGun = 0x19EF378;
+   iClipCapacity = 10;
+
+   iCurrentShot = iClipCapacity - *(int*) (dwBaseGun + 0xCC);
+  // flSpreadVar = *(float*) (dwBaseGun + 0xF8);
+  }
+
+  break;
+
+  case WEAPONLIST_AWP:
+  {
+   dwBaseGun = 0x19EDFF0;
+   iClipCapacity = 10;
+
+   iCurrentShot = iClipCapacity - *(int*) (dwBaseGun + 0xCC);
+  // flSpreadVar = *(float*) (dwBaseGun + 0xF8);
+  }
+
+  break;
+
+  case WEAPONLIST_SG550:
+  {
+   dwBaseGun = 0x19EE650;
+   iClipCapacity = 30;
+
+   iFov = *(int*) (dwBaseGun + 0x58);
+   iCurrentShot = iClipCapacity - *(int*) (dwBaseGun + 0xCC);
+   flSpreadVar = *(float*) (dwBaseGun + 0xF8);
+  }
+
+  break;
+
+  case WEAPONLIST_G3SG1:
+  {
+   dwBaseGun = 0x19EEAA0;
+   iClipCapacity = 20;
+
+   iCurrentShot = iClipCapacity - *(int*) (dwBaseGun + 0xCC);
+   flSpreadVar = *(float*) (dwBaseGun + 0xF8);
+  }
+
+  break;
+
+  case WEAPONLIST_M249:
+  {
+   dwBaseGun = 0x19F5698;
+   iClipCapacity = 100;
+
+   iCurrentShot = iClipCapacity - *(int*) (dwBaseGun + 0xCC);
+   flSpreadVar = *(float*) (dwBaseGun + 0xF8);
+  }
+
+  break;
+
+  default:
+   
+   break;
+
+}
+
+}
+--------------
+New Stuff
+
+//======================================================================  ==================
+#define initpoint 0x190BE50 
+//======================================================================  ==================
+DWORD csWeaponTable[24] = { (DWORD) initpoint,// Usp
+      (DWORD) initpoint + 0x10,// Elies
+      (DWORD) initpoint + 0x20,// Ump45
+      (DWORD) initpoint + 0x30,// Fiveseven
+      (DWORD) initpoint + 0x40,// Mp5
+      (DWORD) initpoint + 0x50,// Sg552
+      (DWORD) initpoint + 0x60,// Ak47
+      (DWORD) initpoint + 0x70,// Aug
+      (DWORD) initpoint + 0x80,// Awp
+      (DWORD) initpoint + 0xA0,// Deagle
+      (DWORD) initpoint + 0xD0,// G3sg1
+      (DWORD) initpoint + 0xE0,// Sg550
+      (DWORD) initpoint + 0xF0,// Glock
+      (DWORD) initpoint + 0x120,// M249
+      (DWORD) initpoint + 0x130,// M3
+      (DWORD) initpoint + 0x140,// M4a1
+      (DWORD) initpoint + 0x150,// Mac10
+      (DWORD) initpoint + 0x160,// P228
+      (DWORD) initpoint + 0x170,// P90
+      (DWORD) initpoint + 0x180,// Scout
+      (DWORD) initpoint + 0x190,// Tmp
+      (DWORD) initpoint + 0x1A0,// Xm1014
+      (DWORD) initpoint + 0x1B0,// Galil
+      (DWORD) initpoint + 0x1C0};// Famas
+
+//======================================================================  ================== 
+char szOffset[255], szTemp[255]; 
+char *weapon;
+int a = 0;
+//======================================================================  ================== 
+void GetWeaponExport( DWORD CurrentOffset )
+{
+    if (a > 24)
+     return;
+
+    sprintf( szTemp, "Searching in -> 0x%x", CurrentOffset );
+    logme( szTemp ); 
+        
+    PBYTE CurrentLocation = (PBYTE)CurrentOffset;
+    if( CurrentLocation[0] == 0xC7 )
+    {
+    a++;
+
+    if (a == 1)
+     weapon = "Usp";
+    else if (a == 2)
+     weapon = "Elites";
+    else if (a == 3)
+     weapon = "Ump45";
+    else if (a == 4)
+     weapon = "Fiveseven";
+    else if (a == 5)
+     weapon = "Mp5";
+    else if (a == 6)
+     weapon = "Sg552";
+    else if (a == 7)
+     weapon = "Ak47";
+    else if (a == 8)
+     weapon = "Aug";
+    else if (a == 9)
+     weapon = "Awp";
+    else if (a == 10)
+     weapon = "Deagle";
+    else if (a == 11)
+     weapon = "G3sg1";
+    else if (a == 12)
+     weapon = "Sg550";
+    else if (a == 13)
+     weapon = "Glock";
+    else if (a == 14)
+     weapon = "M249";
+    else if (a == 15)
+     weapon = "M3";
+    else if (a == 16)
+     weapon = "M4a1";
+    else if (a == 17)
+     weapon = "Mac10";
+    else if (a == 18)
+     weapon = "P228";
+    else if (a == 19)
+     weapon = "P90";
+    else if (a == 20)
+     weapon = "Scout";
+    else if (a == 21)
+     weapon = "Tmp";
+    else if (a == 22)
+     weapon = "Xm1014";
+    else if (a == 23)
+     weapon = "Galil";
+    else if (a == 24)
+     weapon = "Famas";
+    else if (a > 24)
+     return;
+
+        sprintf( szOffset, "0x%x%x%x%x", CurrentLocation[5], CurrentLocation[4], CurrentLocation[3], CurrentLocation[2] );
+        sprintf( szTemp, "%s Offset found at -> %s",weapon, szOffset );
+        logme( szTemp );
+     
+
+    }
+    else
+    {
+        logme( "Invalid offset" );    
+    }
+
+    CurrentLocation = NULL;
+}
+//======================================================================  ==================
+void GetExport()
+{
+    for( int z = 0; z < 24; z++ )
+    {
+        GetWeaponExport(  csWeaponTable[z]  );
+    }
+}  

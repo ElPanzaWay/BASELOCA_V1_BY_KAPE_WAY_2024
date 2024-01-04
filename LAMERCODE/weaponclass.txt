@@ -1,0 +1,245 @@
+
+/*
+
+  Executable modules, item 7
+ Base=0F720000
+ Size=00159000 (1413120.)
+ Entry=0F7D0333 client.<ModuleEntryPoint>
+ Name=client
+ Path=D:\4554\cstrike\cl_dlls\client.dll
+
+
+0F720000   00001000   client                PE header     Imag   R         RWE
+0F721000   000C2000   client     .text      SFX,code      Imag   R         RWE
+0F7E3000   0001D000   client     .rdata     data,imports  Imag   R         RWE
+0F800000   00063000   client     .data                    Imag   R         RWE
+0F863000   00016000   client     .reloc                   Imag   R         RWE
+*/
+
+/*
+Executable modules, item 7
+ Base=0F6C0000
+ Size=00159000 (1413120.)
+ Entry=0F770333 client.<ModuleEntryPoint>
+ Name=client
+ Path=D:\4554\cstrike\cl_dlls\client.dll
+*/
+
+// client.dll (code)
+//0F6C1000    A1 7C2B7B0F            MOV EAX,DWORD PTR DS:[F7B2B7C]
+
+// ptr: 0xf6cdfe5
+// offs = CFE5
+
+/*
+0F66DFDF    90                     NOP
+0F66DFE0    8B4424 04              MOV EAX,DWORD PTR SS:[ESP+4]
+0F66DFE4    48                     DEC EAX
+0F66DFE5    83F8 1D                CMP EAX,1D
+0F66DFE8    0F87 B5000000          JA client.0F66E0A3
+0F66DFEE    FF2485 A8E0660F        JMP DWORD PTR DS:[EAX*4+F66E0A8]
+0F66DFF5    B8 6843750F            MOV EAX,client.0F754368
+0F66DFFA    C3                     RETN
+*/
+
+/*
+0F6CDFDF    90                     NOP
+0F6CDFE0    8B4424 04              MOV EAX,DWORD PTR SS:[ESP+4]
+0F6CDFE4    48                     DEC EAX
+0F6CDFE5    83F8 1D                CMP EAX,1D
+0F6CDFE8    0F87 B5000000          JA client.0F6CE0A3
+0F6CDFEE    FF2485 A8E06C0F        JMP DWORD PTR DS:[EAX*4+F6CE0A8]
+0F6CDFF5    B8 68437B0F            MOV EAX,client.0F7B4368
+0F6CDFFA    C3                     RETN
+0F6CDFFB    B8 E0407B0F            MOV EAX,client.0F7B40E0
+0F6CE000    C3                     RETN
+0F6CE001    B8 60B27B0F            MOV EAX,client.0F7BB260
+0F6CE006    C3                     RETN
+0F6CE007    B8 C0497B0F            MOV EAX,client.0F7B49C0
+0F6CE00C    C3                     RETN
+0F6CE00D    B8 40367B0F            MOV EAX,client.0F7B3640
+0F6CE012    C3                     RETN
+0F6CE013    B8 083A7B0F            MOV EAX,client.0F7B3A08
+0F6CE018    C3                     RETN
+0F6CE019    B8 583E7B0F            MOV EAX,client.0F7B3E58
+0F6CE01E    C3                     RETN
+0F6CE01F    B8 A8337B0F            MOV EAX,client.0F7B33A8
+0F6CE024    C3                     RETN
+0F6CE025    B8 F0347B0F            MOV EAX,client.0F7B34F0
+0F6CE02A    C3                     RETN
+0F6CE02B    B8 10AD7B0F            MOV EAX,client.0F7BAD10
+0F6CE030    C3                     RETN
+0F6CE031    B8 40477B0F            MOV EAX,client.0F7B4740
+0F6CE036    C3                     RETN
+0F6CE037    B8 E8BA7B0F            MOV EAX,client.0F7BBAE8
+0F6CE03C    C3                     RETN
+0F6CE03D    B8 C8387B0F            MOV EAX,client.0F7B38C8
+0F6CE042    C3                     RETN
+0F6CE043    B8 A03F7B0F            MOV EAX,client.0F7B3FA0
+0F6CE048    C3                     RETN
+0F6CE049    B8 503B7B0F            MOV EAX,client.0F7B3B50
+0F6CE04E    C3                     RETN
+0F6CE04F    B8 00467B0F            MOV EAX,client.0F7B4600
+0F6CE054    C3                     RETN
+0F6CE055    B8 88377B0F            MOV EAX,client.0F7B3788
+0F6CE05A    C3                     RETN
+0F6CE05B    B8 58AE7B0F            MOV EAX,client.0F7BAE58
+0F6CE060    C3                     RETN
+0F6CE061    B8 C0AB7B0F            MOV EAX,client.0F7BABC0
+0F6CE066    C3                     RETN
+0F6CE067    B8 D0AF7B0F            MOV EAX,client.0F7BAFD0
+0F6CE06C    C3                     RETN
+0F6CE06D    B8 18B17B0F            MOV EAX,client.0F7BB118
+0F6CE072    C3                     RETN
+0F6CE073    B8 A8447B0F            MOV EAX,client.0F7B44A8
+0F6CE078    C3                     RETN
+0F6CE079    B8 50B47B0F            MOV EAX,client.0F7BB450
+0F6CE07E    C3                     RETN
+0F6CE07F    B8 903C7B0F            MOV EAX,client.0F7B3C90
+0F6CE084    C3                     RETN
+0F6CE085    B8 80487B0F            MOV EAX,client.0F7B4880
+0F6CE08A    C3                     RETN
+0F6CE08B    B8 20427B0F            MOV EAX,client.0F7B4220
+0F6CE090    C3                     RETN
+0F6CE091    B8 C8A07B0F            MOV EAX,client.0F7BA0C8
+0F6CE096    C3                     RETN
+0F6CE097    B8 90B57B0F            MOV EAX,client.0F7BB590
+0F6CE09C    C3                     RETN
+0F6CE09D    B8 084B7B0F            MOV EAX,client.0F7B4B08
+0F6CE0A2    C3                     RETN
+0F6CE0A3    33C0                   XOR EAX,EAX
+0F6CE0A5    C3                     RETN
+0F6CE0A6    8BFF                   MOV EDI,EDI
+0F6CE0A8  ^ 79 E0                  JNS SHORT client.0F6CE08A
+0F6CE0AA    6C                     INS BYTE PTR ES:[EDI],DX                 ; I/O command
+0F6CE0AB    0FA3E0                 BT EAX,ESP
+0F6CE0AE    6C                     INS BYTE PTR ES:[EDI],DX                 ; I/O command
+0F6CE0AF  - 0F85 E06C0F55          JNZ atioglxx.647C4D95
+0F6CE0B5    E0 6C                  LOOPDNE SHORT client.0F6CE123
+0F6CE0B7    0F91E0                 SETNO AL
+0F6CE0BA    6C                     INS BYTE PTR ES:[EDI],DX                 ; I/O command
+*/
+
+
+/*
+0F5BDFDF    90                     NOP
+0F5BDFE0    8B4424 04              MOV EAX,DWORD PTR SS:[ESP+4]
+0F5BDFE4    48                     DEC EAX
+0F5BDFE5    83F8 1D                CMP EAX,1D
+0F5BDFE8    0F87 B5000000          JA client.0F5BE0A3
+0F5BDFEE    FF2485 A8E05B0F        JMP DWORD PTR DS:[EAX*4+F5BE0A8]
+0F5BDFF5    B8 68436A0F            MOV EAX,client.0F6A4368
+0F5BDFFA    C3                     RETN
+0F5BDFFB    B8 E0406A0F            MOV EAX,client.0F6A40E0
+0F5BE000    C3                     RETN
+
+
+  el autooffset da = 0xf5bdfe5
+  pero el lugar correcto es 0F5BDFF5
+  por lo tanto, al autooffset hay que sumarle 16 o 0x10
+*/
+
+
+DWORD* GetWeaponClass()
+{
+	// with the offset 0x9 the pattern ends up with final address client.dll+0xDAEE
+	// where's the WeaponClass
+	//	DWORD dwFindPattern(DWORD dwAddress, DWORD dwLen, BYTE* bMask,char* szMask);
+	//	DWORD dwCLsize=0;
+	//	DWORD dwaddx = dwFindPattern(CLBase, dwClSizeOfData, (BYTE*)"\x83\xF8\x1D\x0F\0", "xxxx\0");
+	//	char asdx[111]="\0";
+	//	sprintf(asdx, "initpoint: 0x%X\0", dwaddx);
+	//	MessageBoxA(0,asdx,0,0);
+
+	//0AA81000
+	//0AA8DB05
+	//CB05
+	//DWORD wInitPoint = (DWORD)(dwClCode+0xCB05);
+
+	/*
+	DWORD CLcode = (DWORD)GetModuleHandle(L"client.dll\0")+0x1000;
+
+//	DWORD dwaddx = dwFindPattern((DWORD)GetModuleHandle(L"client.dll\0"), 0x20000, (BYTE*)"\x83\xF8\x1D\x0F\0", "xxxx\0");
+//	char asdx[111]="\0";
+//	sprintf(asdx, "initpoint: 0x%X\0", dwaddx);
+//	MessageBoxA(0,asdx,0,0);
+
+	return (PDWORD)(CLcode+0xCFE5+0x10);
+	*/
+
+	return (PDWORD)pWpns;
+}
+
+//0190DAD5    B8 68EE9E01                 MOV EAX,hl.019EEE68
+
+/*
+0190DABF    90                          NOP
+0190DAC0    8B4424 04                   MOV EAX,DWORD PTR SS:[ESP+4]
+0190DAC4    48                          DEC EAX
+0190DAC5    83F8 1D                     CMP EAX,1D
+0190DAC8    0F87 B5000000               JA hl.0190DB83
+0190DACE    FF2485 88DB9001             JMP DWORD PTR DS:[EAX*4+190DB88]
+0190DAD5    B8 68EE9E01                 MOV EAX,hl.019EEE68
+0190DADA    C3                          RETN
+0190DADB    B8 E0EB9E01                 MOV EAX,hl.019EEBE0
+0190DAE0    C3                          RETN
+0190DAE1    B8 385D9F01                 MOV EAX,hl.019F5D38
+0190DAE6    C3                          RETN
+0190DAE7    B8 B8F49E01                 MOV EAX,hl.019EF4B8
+0190DAEC    C3                          RETN
+0190DAED    B8 40E19E01                 MOV EAX,hl.019EE140
+0190DAF2    C3                          RETN
+0190DAF3    B8 08E59E01                 MOV EAX,hl.019EE508
+0190DAF8    C3                          RETN
+0190DAF9    B8 58E99E01                 MOV EAX,hl.019EE958
+0190DAFE    C3                          RETN
+0190DAFF    B8 A8DE9E01                 MOV EAX,hl.019EDEA8
+0190DB04    C3                          RETN
+0190DB05    B8 F0DF9E01                 MOV EAX,hl.019EDFF0
+0190DB0A    C3                          RETN
+0190DB0B    B8 E8579F01                 MOV EAX,hl.019F57E8
+0190DB10    C3                          RETN
+0190DB11    B8 38F29E01                 MOV EAX,hl.019EF238
+0190DB16    C3                          RETN
+0190DB17    B8 B8659F01                 MOV EAX,hl.019F65B8
+0190DB1C    C3                          RETN
+0190DB1D    B8 C8E39E01                 MOV EAX,hl.019EE3C8
+0190DB22    C3                          RETN
+0190DB23    B8 A0EA9E01                 MOV EAX,hl.019EEAA0
+0190DB28    C3                          RETN
+0190DB29    B8 50E69E01                 MOV EAX,hl.019EE650
+0190DB2E    C3                          RETN
+0190DB2F    B8 F8F09E01                 MOV EAX,hl.019EF0F8
+0190DB34    C3                          RETN
+0190DB35    B8 88E29E01                 MOV EAX,hl.019EE288
+0190DB3A    C3                          RETN
+0190DB3B    B8 30599F01                 MOV EAX,hl.019F5930
+0190DB40    C3                          RETN
+0190DB41    B8 98569F01                 MOV EAX,hl.019F5698
+0190DB46    C3                          RETN
+0190DB47    B8 A85A9F01                 MOV EAX,hl.019F5AA8
+0190DB4C    C3                          RETN
+0190DB4D    B8 F05B9F01                 MOV EAX,hl.019F5BF0
+0190DB52    C3                          RETN
+0190DB53    B8 A8EF9E01                 MOV EAX,hl.019EEFA8
+0190DB58    C3                          RETN
+0190DB59    B8 285F9F01                 MOV EAX,hl.019F5F28
+0190DB5E    C3                          RETN
+0190DB5F    B8 90E79E01                 MOV EAX,hl.019EE790
+0190DB64    C3                          RETN
+0190DB65    B8 78F39E01                 MOV EAX,hl.019EF378
+0190DB6A    C3                          RETN
+0190DB6B    B8 20ED9E01                 MOV EAX,hl.019EED20
+0190DB70    C3                          RETN
+0190DB71    B8 C04B9F01                 MOV EAX,hl.019F4BC0
+0190DB76    C3                          RETN
+0190DB77    B8 68609F01                 MOV EAX,hl.019F6068
+0190DB7C    C3                          RETN
+0190DB7D    B8 00F69E01                 MOV EAX,hl.019EF600
+0190DB82    C3                          RETN
+0190DB83    33C0                        XOR EAX,EAX
+0190DB85    C3                          RETN
+0190DB86    8BFF                        MOV EDI,EDI
+0190DB88    59                          POP ECX
+*/
+

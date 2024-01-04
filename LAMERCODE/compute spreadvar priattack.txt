@@ -1,0 +1,299 @@
+void ComputeAccuracy()// priattack?????
+{
+	int internal_WeaponState = Spread.m_iWeaponState;
+	//
+
+    switch (me.currentWeaponID)
+    {
+
+	case WEAPONLIST_USP:
+	{
+        if (++Spread.m_iShotsFired > 1)
+            return;
+        if (Spread.prevtime != 0.0f)
+        {
+            Spread.m_flAccuracy -= 
+				(0.3f - (Spread.curtime - Spread.prevtime)) * 0.275f;
+            if (Spread.m_flAccuracy > 0.92f)
+                Spread.m_flAccuracy = 0.92f;
+            else if (Spread.m_flAccuracy < 0.6f)
+                Spread.m_flAccuracy = 0.6f;
+        }
+	}
+    break;
+
+	case WEAPONLIST_DEAGLE:
+	{
+        if (++Spread.m_iShotsFired > 1)
+            return;
+
+        if (Spread.prevtime != 0.0)
+        {
+            Spread.m_flAccuracy -= 
+				(0.4f - (Spread.curtime - Spread.prevtime)) * 0.35f;
+            if (Spread.m_flAccuracy > 0.9f)
+                Spread.m_flAccuracy = 0.9f;
+            else if (Spread.m_flAccuracy < 0.55f)
+                Spread.m_flAccuracy = 0.55f;
+        }
+	}
+	break;
+
+	case WEAPONLIST_GLOCK18:
+	{
+//#define GLOCK18_BURST (1 << 1)
+		if (!(internal_WeaponState & (1 << 1)))
+        {
+            if (++Spread.m_iShotsFired > 1)
+                return;
+        }
+
+        if (Spread.prevtime)
+        {
+            Spread.m_flAccuracy -= 
+				(0.325f - (Spread.curtime - Spread.prevtime)) * 0.275f;
+            if (Spread.m_flAccuracy > 0.9f)
+                Spread.m_flAccuracy = 0.9f;
+            else if (Spread.m_flAccuracy < 0.6f)
+                Spread.m_flAccuracy = 0.6f;
+        }
+	}
+	break;
+
+	case WEAPONLIST_P228:
+	{
+        if (++Spread.m_iShotsFired > 1)
+            return;
+        if (Spread.prevtime != 0.0f)
+        {
+            Spread.m_flAccuracy -= 
+				(0.325f - (Spread.curtime - Spread.prevtime)) * 0.3f;
+            if (Spread.m_flAccuracy > 0.9f)
+                Spread.m_flAccuracy = 0.9f;
+            else if (Spread.m_flAccuracy < 0.6f)
+                Spread.m_flAccuracy = 0.6f;
+        }
+	}
+	break;
+
+	case WEAPONLIST_FIVESEVEN:
+	{
+        if (++Spread.m_iShotsFired > 1)
+            return;
+        if (Spread.prevtime != 0.0f)
+        {
+            Spread.m_flAccuracy -= 
+				(0.275f - (Spread.curtime - Spread.prevtime)) * 0.25f;
+            if (Spread.m_flAccuracy > 0.92f)
+                Spread.m_flAccuracy = 0.92f;
+            else if (Spread.m_flAccuracy < 0.725f)
+            {
+                Spread.m_flAccuracy = 0.725f;
+            }
+        }
+	}
+	break;
+
+	case WEAPONLIST_ELITE:
+	{
+        if(++Spread.m_iShotsFired > 1)
+            return;
+        if (Spread.prevtime)
+        {
+            Spread.m_flAccuracy -= 
+				(0.325f - Spread.curtime - Spread.prevtime) * 0.275f;
+            if (Spread.m_flAccuracy > 0.88f)
+                Spread.m_flAccuracy = 0.88f;
+            else if (Spread.m_flAccuracy < 0.55f)
+                Spread.m_flAccuracy = 0.55f;
+        }
+	}
+	break;
+
+	//
+
+	case WEAPONLIST_G3SG1:
+	{
+        if (Spread.prevtime)
+        {
+            Spread.m_flAccuracy = 
+				(Spread.curtime - Spread.prevtime) * 0.3f + 0.55f;
+            if (Spread.m_flAccuracy > 0.98f)
+                Spread.m_flAccuracy = 0.98f;
+        }
+        else
+            Spread.m_flAccuracy = 0.98f;
+	}
+	break;
+
+    case WEAPONLIST_SG550:
+	{
+        if (Spread.prevtime)
+        {
+            Spread.m_flAccuracy = 
+				(Spread.curtime - Spread.prevtime) * 0.35f + 0.65f;
+            if (Spread.m_flAccuracy > 0.98f)
+                Spread.m_flAccuracy = 0.98f;
+        }
+	}
+	break;
+
+	//
+
+    case WEAPONLIST_SG552:
+	{
+        Spread.m_bDelayFire = true;
+        Spread.m_iShotsFired++;
+        Spread.m_flAccuracy = 
+			((Spread.m_iShotsFired * Spread.m_iShotsFired * Spread.m_iShotsFired) / 220) + 0.3f;
+        if (Spread.m_flAccuracy > 1.0f)
+            Spread.m_flAccuracy = 1.0f;
+	}
+	break;
+
+    case WEAPONLIST_AK47:
+	{
+        Spread.m_bDelayFire = true;
+        ++Spread.m_iShotsFired;
+		//me.spread.spreadvar
+        Spread.m_flAccuracy = 
+			static_cast<float>((Spread.m_iShotsFired * Spread.m_iShotsFired) * (Spread.m_iShotsFired / 200)) + 0.35f;
+        if (Spread.m_flAccuracy > 1.25f)
+            Spread.m_flAccuracy = 1.25f;
+	}
+	break;
+
+	case WEAPONLIST_M4A1:
+	{
+        Spread.m_bDelayFire = true;
+        ++Spread.m_iShotsFired;
+        Spread.m_flAccuracy = 
+			((Spread.m_iShotsFired * Spread.m_iShotsFired * Spread.m_iShotsFired) / 220) + 0.3f;
+        if (Spread.m_flAccuracy > 1)
+            Spread.m_flAccuracy = 1;
+	}
+	break;
+
+    case WEAPONLIST_FAMAS:
+	{
+        Spread.m_bDelayFire = true;
+        ++Spread.m_iShotsFired;
+        Spread.m_flAccuracy = 
+			(Spread.m_iShotsFired * Spread.m_iShotsFired * Spread.m_iShotsFired / 215) + 0.3f;
+        if (Spread.m_flAccuracy > 1.0f)
+            Spread.m_flAccuracy = 1.0f;
+
+	}
+	break;
+
+	case WEAPONLIST_GALIL:
+	{
+        Spread.m_bDelayFire = true;
+        ++Spread.m_iShotsFired;
+        Spread.m_flAccuracy = 
+			((Spread.m_iShotsFired * Spread.m_iShotsFired * Spread.m_iShotsFired) / 200) + 0.35f;
+        if (Spread.m_flAccuracy > 1.25f)
+            Spread.m_flAccuracy = 1.25f;
+	}
+	break;
+
+	case WEAPONLIST_AUG:
+	{
+        Spread.m_bDelayFire = true;
+        ++Spread.m_iShotsFired;
+        Spread.m_flAccuracy = 
+			((Spread.m_iShotsFired * Spread.m_iShotsFired * Spread.m_iShotsFired) / 215) + 0.3f;
+        if (Spread.m_flAccuracy > 1.0f)
+            Spread.m_flAccuracy = 1.0f;
+	}
+	break;
+
+    case WEAPONLIST_M249:
+	{
+        Spread.m_bDelayFire = true;
+        ++Spread.m_iShotsFired;
+        Spread.m_flAccuracy = 
+			((Spread.m_iShotsFired * Spread.m_iShotsFired * Spread.m_iShotsFired) / 175) + 0.4f;
+        if (Spread.m_flAccuracy > 0.9f)
+            Spread.m_flAccuracy = 0.9f;
+	}
+	break;
+
+	//
+
+    case WEAPONLIST_MAC10:
+	{
+        Spread.m_bDelayFire = true;
+        ++Spread.m_iShotsFired;
+        Spread.m_flAccuracy = 
+			((Spread.m_iShotsFired * Spread.m_iShotsFired * Spread.m_iShotsFired) / 200) + 0.6f;
+        if (Spread.m_flAccuracy > 1.65f)
+            Spread.m_flAccuracy = 1.65f;
+	}
+	break;
+
+    case WEAPONLIST_MP5:
+	{
+        Spread.m_bDelayFire = true;
+        ++Spread.m_iShotsFired;
+        Spread.m_flAccuracy = 
+			((Spread.m_iShotsFired * Spread.m_iShotsFired) / 220.1) + 0.45f;
+        if (Spread.m_flAccuracy > 0.75f)
+            Spread.m_flAccuracy = 0.75f;
+	}
+	break;
+
+    case WEAPONLIST_P90:
+	{
+        Spread.m_bDelayFire = true;
+        ++Spread.m_iShotsFired;
+        Spread.m_flAccuracy = 
+			(Spread.m_iShotsFired * Spread.m_iShotsFired / 175) + 0.45f;
+        if (Spread.m_flAccuracy > 1)
+            Spread.m_flAccuracy = 1;
+    }
+	break;
+
+    case WEAPONLIST_TMP:
+	{
+        Spread.m_bDelayFire = true;
+        ++Spread.m_iShotsFired;
+        Spread.m_flAccuracy = 
+			((Spread.m_iShotsFired * Spread.m_iShotsFired * Spread.m_iShotsFired) / 200) + 0.55f;
+        if (Spread.m_flAccuracy > 1.4f)
+            Spread.m_flAccuracy = 1.4f;
+	}
+	break;
+
+    case WEAPONLIST_UMP45:
+	{
+        Spread.m_bDelayFire = true;
+        ++Spread.m_iShotsFired;
+        Spread.m_flAccuracy = 
+			((Spread.m_iShotsFired * Spread.m_iShotsFired) / 210) + 0.5f;
+        if (Spread.m_flAccuracy > 1.0f)
+            Spread.m_flAccuracy = 1.0f;
+	}
+	break;
+
+	default:
+	Spread.m_flAccuracy = 0;
+	break;
+
+    }
+}*/
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

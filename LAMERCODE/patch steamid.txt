@@ -1,0 +1,167 @@
+﻿Patch and randomize SteamID
+
+I found this in hack ovh, seems interesting to randomize the SteamID
+[CODE]
+DWORD ProcessPID = GetCurrentProcessId();
+HANDLE phandle = OpenProcess(PROCESS_VM_READ,0,ProcessPID);
+ 
+ 
+void PatchMemSteamId()
+{
+DWORD PatchAddr = (DWORD)GetModuleHandle("steamclient.dll") + 0x5B4D4; // для повторного смены steam id9876543210ABCDSE
+*(int*)PatchAddr = 0;
+}
+void GetSteamId()
+{
+#define RND 64
+char randName[50];
+char randChars[64] = "1234567890QqWwEeRrTtYyUuIiOoPpAaSsDdFfGgHhJjKkLlZzXxCcVvBbNnMm";
+int sTeamId = 0;
+DWORD sMask = (DWORD)GetModuleHandleA("steamclient.dll") + 0x5A448;
+DWORD sSteam = (DWORD)GetModuleHandleA("steamclient.dll") + 0x5AC4C;
+if(g_Engine.Cmd_Argc() == 1)
+{
+g_Engine.Con_Printf("\t\t\tCommands:\n");
+g_Engine.Con_Printf("\t\t\tmask - current mask\n");
+g_Engine.Con_Printf("\t\t\trandom - random set mask\n");
+g_Engine.Con_Printf("\t\t\tcurrent - current steam id\n");
+g_Engine.Con_Printf("\t\t\tset - set mask\n");
+}
+else if(g_Engine.Cmd_Argc() == 2)
+{
+if(strstr(g_Engine.Cmd_Argv(1),"mask"))
+{
+g_Engine.Con_Printf("\t\t\tMask: %s\n",(char*)sMask);
+}
+else if(strstr(g_Engine.Cmd_Argv(1),"current"))
+{
+ReadProcessMemory(phandle,(void*)sSteam,&sTeamId,sizeof(sTeamId),0);
+g_Engine.Con_Printf("\t\t\tSteam ID: %i\n",sTeamId);
+}
+else if(strstr(g_Engine.Cmd_Argv(1),"random"))
+{
+#define RANDOM_SET randChars[rand()%RND]
+srand(g_Engine.pfnRandomFloat(10000,20000)+time(0));
+sprintf(randName,"%c%c%c%c%c%c%c%c",RANDOM_SET,RANDOM_SET,RANDOM_SET,RANDOM_SET,RANDOM_SET,RANDOM_SET,
+RANDOM_SET,RANDOM_SET,RANDOM_SET,RANDOM_SET,RANDOM_SET,RANDOM_SET,RANDOM_SET,RANDOM_SET,RANDOM_SET,RANDOM_SET,RANDOM_SET,RANDOM_SET,RANDOM_SET,RANDOM_SET,RANDOM_SET,RANDOM_SET,RANDOM_SET,RANDOM_SET,RANDOM_SET,RANDOM_SET,RANDOM_SET,RANDOM_SET,RANDOM_SET,RANDOM_SET,RANDOM_SET,RANDOM_SET,RANDOM_SET,RANDOM_SET,RANDOM_SET,RANDOM_SET,RANDOM_SET,RANDOM_SET,RANDOM_SET,RANDOM_SET,RANDOM_SET,RANDOM_SET,RANDOM_SET,RANDOM_SET,RANDOM_SET,RANDOM_SET,RANDOM_SET,RANDOM_SET,RANDOM_SET,RANDOM_SET);
+*(string*)sMask = randName;
+g_Engine.Con_Printf("\t\t\tMask Set: %s\n",(char*)sMask);
+PatchMemSteamId();
+}
+else
+g_Engine.Con_Printf("\t\t\tCheck the syntax\n");
+}
+else if(g_Engine.Cmd_Argc() == 3)
+{
+if(strstr(g_Engine.Cmd_Argv(1),"set"))
+{
+*(string*)sMask = g_Engine.Cmd_Argv(2);
+g_Engine.Con_Printf("\t\t\tMask Set: %s\n",(char*)sMask);
+PatchMemSteamId();
+}
+else
+g_Engine.Con_Printf("\t\t\tCheck the syntax\n");
+}
+else
+g_Engine.Con_Printf("\t\t\tCheck the syntax\n");
+}
+ 
+ 
+void PatchFunc()
+{
+DWORD Old,Old2;
+DWORD PatchAddr = (DWORD)GetModuleHandleA("hw.dll") + 0x263A3;
+DWORD PatchAddr2 = (DWORD)GetModuleHandleA("hw.dll") + 0x263A7;
+VirtualProtect((LPVOID)PatchAddr,sizeof(int),PAGE_EXECUTE_READWRITE,&Old);
+VirtualProtect((LPVOID)PatchAddr2,sizeof(BYTE),PAGE_EXECUTE_READWRITE,&Old2);
+*(int*)PatchAddr = 2425393296;
+*(BYTE*)PatchAddr2 = 144;
+[/CODE]
+
+
+
+[CODE]
+void PatchMemSteamId()
+{
+    DWORD PatchAddr = (DWORD)GetModuleHandle("steamclient.dll") + 0x5B4D4;
+    *(int*)PatchAddr = 0;
+}
+ 
+ 
+//void GetSteamId()
+//{
+//  #define RND 17
+//  char randName[8];
+//  char randChars[17] = "ABCDEF0123456789";
+//  int sTeamId = 0;
+//  DWORD sMask =  (DWORD)GetModuleHandleA("steamclient.dll") + 0x5A448;
+//  DWORD sSteam = (DWORD)GetModuleHandleA("steamclient.dll") + 0x5AC4C;
+//  if(g_pEngfuncs->Cmd_Argc() == 1)
+//  {
+//      g_pEngfuncs->Con_Printf("\t\t\tCommands:\n");
+//      g_pEngfuncs->Con_Printf("\t\t\tmask - current mask\n");
+//      g_pEngfuncs->Con_Printf("\t\t\trandom - random set mask\n");
+//      g_pEngfuncs->Con_Printf("\t\t\tcurrent - current steam id\n");
+//      g_pEngfuncs->Con_Printf("\t\t\tset - set mask\n");
+//  }
+//  else if(g_pEngfuncs->Cmd_Argc() == 2)
+//  {
+//      if(strstr(g_pEngfuncs->Cmd_Argv(1),"mask"))
+//      {
+//          g_pEngfuncs->Con_Printf("\t\t\tMask: %s\n",(char*)sMask);
+//      }
+//      else if(strstr(g_pEngfuncs->Cmd_Argv(1),"current"))
+//      {
+//          ReadProcessMemory(phandle,(void*)sSteam,&sTeamId,sizeof(sTeamId),0);
+//          g_pEngfuncs->Con_Printf("\t\t\tSteam ID: %i\n",sTeamId);
+//      }
+//      else if(strstr(g_pEngfuncs->Cmd_Argv(1),"random"))
+//      {
+//          #define RANDOM_SET randChars[rand()%RND]
+//          srand(g_pEngfuncs->pfnRandomFloat(10000,20000)+time(0));
+//          sprintf(randName,"%c%c%c%c%c%c%c%c",RANDOM_SET,RANDOM_SET,RANDOM_SET,RANDOM_SET,RANDOM_SET,RANDOM_SET,
+//              RANDOM_SET,RANDOM_SET);
+//          *(string*)sMask = randName;
+//          g_pEngfuncs->Con_Printf("\t\t\tMask Set: %s\n",(char*)sMask);
+//          PatchMemSteamId();
+//      }
+//      else
+//          g_pEngfuncs->Con_Printf("\t\t\tCheck the syntax\n");
+//  }
+//  else if(g_pEngfuncs->Cmd_Argc() == 3)
+//  {
+//      if(strstr(g_pEngfuncs->Cmd_Argv(1),"set"))
+//      {
+//          *(string*)sMask = g_pEngfuncs->Cmd_Argv(2);
+//          g_pEngfuncs->Con_Printf("\t\t\tMask Set: %s\n",(char*)sMask);
+//          PatchMemSteamId();
+//      }
+//      else
+//          g_pEngfuncs->Con_Printf("\t\t\tCheck the syntax\n");
+//  }
+//  else
+//      g_pEngfuncs->Con_Printf("\t\t\tCheck the syntax\n");
+//}
+ 
+ 
+void HackSteamID()
+{
+    if ( g_pEngfuncs->Cmd_Argc() == 2 ) {
+        treasure = atoi(g_pEngfuncs->Cmd_Argv(1));
+        if ( bruteforce() == 1 )
+        {
+            DWORD sMask =  (DWORD)GetModuleHandleA("steamclient.dll") + 0x5A448;
+            PatchMemSteamId();
+            *(string*)sMask = (string)Input;
+            g_pEngfuncs->Con_Printf("SteamID Set: %u\n", hashing(Input));
+        }
+    }
+    else
+    {
+        g_pEngfuncs->Con_Printf("Check the syntax\n");
+    }
+}
+[/CODE]
+
+
+

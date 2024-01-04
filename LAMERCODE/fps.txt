@@ -1,0 +1,31 @@
+Credits: me / Devil_In_I aka Invisible
+That patch it's tested on builds 4554(nonsteam)/7561(latest steam).
+
+void PatchFpsoverride() // Patching the "override"/"developer" cvar, so if it's 0 still you'll be able to get higher fps than 100 
+{                                 // (no matter it's value, you can add a delete of that command, since it's useless with the patch).
+	DWORD Address = FindPushMsg(Hardware.base, Hardware.end, "-sys_ticrate");
+	Address = FindPattern("\xD9\x05\x1C\x00\x00\x01", Address - 0xA8, Address, 0);
+	memwrite(Address, "\x90\x90\x90\x90\x90\x90", 6);
+}
+ 
+void PatchFpsUnder20() // You will be able to set fps_max to less than 20
+{
+	DWORD Address = FindPushMsg(Hardware.base, Hardware.end, "-sys_ticrate");
+	Address = FindPattern("\xDC\x1D\xE0\x00\x00\x01", Address - 0x71, Address, 0);
+	memwrite(Address, "\x90\x90\x90\x90\x90\x90", 6);
+}
+ 
+void PatchFpsConnecting() // Your fps while connecting won't drop to low, it will stay to what you've put in "fps_max"
+{
+	DWORD Address = FindPushMsg(Hardware.base, Hardware.end, "-sys_ticrate");
+	Address = FindPattern("\x83\xF8\x01", Address - 0xED, Address, 0);
+	memwrite(Address, "\x90\x90\x90", 3);
+}
+ 
+void PatchFpsNotconnected() // When not connected in a server or in the local game, where's the menu, you won't have limit to 100fps 
+{                                         // and will again be set to your "fps_max" value, without limits.
+	DWORD Address = FindPushMsg(Hardware.base, Hardware.end, "-sys_ticrate");
+	Address = FindPattern("\x85\xC0", Address - 0xFA, Address, 0);
+	memwrite(Address, "\x90\x90", 2);
+}
+
